@@ -13,18 +13,28 @@ CREATE TABLE user_roles (
 );
 
 CREATE TABLE courses (
-    courseId VARCHAR(50) NOT NULL,
+    courseId INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     courseName VARCHAR(50) NOT NULL,
     courseDescription VARCHAR(500) NOT NULL,
     PRIMARY KEY (courseId)
 );
 
+CREATE TABLE attachment (
+    attachment_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    filename VARCHAR(255) DEFAULT NULL,
+    content_type VARCHAR(255) DEFAULT NULL,
+    content BLOB DEFAULT NULL,
+    course_id INTEGER DEFAULT NULL,
+    PRIMARY KEY (attachment_id ),
+    FOREIGN KEY (course_id) REFERENCES courses(courseId) 
+);
+
 CREATE TABLE courses_lecturers (
     course_lecturer_record_id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-    courseId VARCHAR(50) NOT NULL,
+    course_Id INTEGER DEFAULT NULL,
     course_lecturer VARCHAR(50) NOT NULL,
     PRIMARY KEY (course_lecturer_record_id),
-    FOREIGN KEY (courseId) REFERENCES courses(courseId),
+    FOREIGN KEY (course_Id) REFERENCES courses(courseId),
     FOREIGN KEY (course_lecturer) REFERENCES users(username)
 );
 
