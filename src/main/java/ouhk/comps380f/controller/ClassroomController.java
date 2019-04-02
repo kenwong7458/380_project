@@ -19,6 +19,7 @@ import ouhk.comps380f.model.Attachment;
 import ouhk.comps380f.model.Course;
 import ouhk.comps380f.model.User;
 import ouhk.comps380f.view.DownloadingView;
+import ouhk.comps380f.model.CourseLecturer;
 
 @Controller
 @RequestMapping("classroom")
@@ -78,7 +79,7 @@ public class ClassroomController {
         Course course = this.courseDatabase.get(courseId);
         if (course == null
                 || (!request.isUserInRole("ROLE_ADMIN")
-                && !principal.getName().equals(course.getCourseLecturer()))) {
+                && !principal.getName().equals(course.getLecturer()))) {
             return new ModelAndView(new RedirectView("/classroom/listCourse", true));
         }
 
@@ -193,10 +194,11 @@ public class ClassroomController {
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public View create(CreateCourseForm form, Principal principal) throws IOException {
         Course course = new Course();
+        CourseLecturer lecturer = new CourseLecturer();
         course.setId(this.getNextCourseId());
         course.setCourseName(form.getCourseName());
         course.setCourseDescription(form.getCourseDescription());
-        course.setCourseLecturer(principal.getName());
+        lecturer.setCourseLecturer(principal.getName());
         
         for (MultipartFile filePart : form.getAttachments()) {
             Attachment attachment = new Attachment();
@@ -241,7 +243,7 @@ public class ClassroomController {
         Course course = this.courseDatabase.get(courseId);
         if (course == null
                 || (!request.isUserInRole("ROLE_ADMIN")
-                && !principal.getName().equals(course.getCourseLecturer()))) {
+                && !principal.getName().equals(course.getLecturer()))) {
             return "redirect:/classroom/listCourse";
         }
         
