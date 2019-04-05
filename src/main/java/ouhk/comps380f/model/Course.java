@@ -33,11 +33,11 @@ public class Course implements Serializable {
 
     
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "courses", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
-     private Map <String, Attachment> attachments = new Hashtable<>();
+     private List <Attachment> attachments = new ArrayList<>();
     
-    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "courses", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
      private List <CourseLecturer> lecturer = new ArrayList<>();
 
@@ -65,35 +65,37 @@ public class Course implements Serializable {
         this.courseDescription = courseDescription;
     }
 
-   public Attachment getAttachment(String name) {
-        return this.attachments.get(name);
+    public List<Attachment> getAttachments() {
+        return attachments;
     }
 
-    public Collection<Attachment> getAttachments() {
-        return this.attachments.values();
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
     }
 
-    public void addAttachment(Attachment attachment) {
-        this.attachments.put(attachment.getName(), attachment);
-    }
+//    public void addAttachment(Attachment attachment) {
+//        this.attachments.put(attachment.getName(), attachment);
+//    }
+    
+    
 
     public int getNumberOfAttachments() {
         return this.attachments.size();
     }
 
-    public boolean hasAttachment(String name) {
-        return this.attachments.containsKey(name);
-    }
-    
-     public Attachment deleteAttachment(String name) {
-        return this.attachments.remove(name);
-    }
-     
-     
-//    public void deleteAttachment(Attachment attachment) {
-//        attachment.setCourseId(null);
-//        this.attachments.remove(attachment);
+//    public boolean hasAttachment(String name) {
+//        return this.attachments.containsKey(name);
 //    }
+    
+//     public Attachment deleteAttachment(String name) {
+//        return this.attachments.remove(name);
+//    }
+     
+     
+    public void deleteAttachment(Attachment attachment) {
+        attachment.setCourse(null);
+        this.attachments.remove(attachment);
+    }
 
     public List<CourseLecturer> getLecturer() {
         return lecturer;

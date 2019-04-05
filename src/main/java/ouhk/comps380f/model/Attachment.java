@@ -30,7 +30,7 @@ public class Attachment implements Serializable {
     @Lob
     private byte[] contents;
 
-    @Column(name = "course_id", insertable=false, updatable=false)
+    @Column(name = "course_Id", insertable=false, updatable=false)
     private long courseId;
 
     @ManyToOne
