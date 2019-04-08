@@ -54,6 +54,10 @@
     <authentication-manager>
         <authentication-provider user-service-ref="userService" />
     </authentication-manager> 
+    
+      <!-- Create default configuration for Hibernate -->
+    <b:bean id="hibernateJpaVendorAdapter"
+            class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
 
 <!-- Configure the transaction manager bean -->
     <b:bean id="transactionManager"
@@ -80,5 +84,5 @@
         </b:property>
         <!-- Set base package of your entities -->
         <b:property name="packagesToScan" value="ouhk.comps380f.model"/>
-    </b:bean>;
+    </b:bean>
 </b:beans>
