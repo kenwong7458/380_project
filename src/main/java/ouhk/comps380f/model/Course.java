@@ -25,22 +25,15 @@ public class Course implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "courseId")
     private long id;
-
-    //@Column(name = "name")
+    
     private String courseName;
 
     private String courseDescription;
 
-    
-
-    @OneToMany(mappedBy = "courses", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
      private List <Attachment> attachments = new ArrayList<>();
     
-    @OneToMany(mappedBy = "courses", fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL, orphanRemoval = true)
-     private List <CourseLecturer> lecturer = new ArrayList<>();
-
     public long getId() {
         return id;
     }
@@ -97,13 +90,7 @@ public class Course implements Serializable {
         this.attachments.remove(attachment);
     }
 
-    public List<CourseLecturer> getLecturer() {
-        return lecturer;
-    }
-
-    public void setLecturer(List<CourseLecturer> lecturer) {
-        this.lecturer = lecturer;
-    }
+ 
 }
 
 
